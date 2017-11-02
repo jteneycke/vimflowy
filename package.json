@@ -31,7 +31,7 @@
     "@types/lodash": "^4.14.62",
     "@types/minimist": "^1.2.0",
     "@types/mocha": "^2.2.32",
-    "@types/react": "^15.0.34",
+    "@types/react": "^15.6.5",
     "@types/react-dom": "^0.14.18",
     "@types/sqlite3": "^2.2.33",
     "@types/webpack": "^2.2.15",
@@ -58,7 +58,7 @@
     "ts-node": "^3.1.0",
     "tslint": "^4.5.1",
     "tslint-loader": "^3.5.3",
-    "typescript": "^2.5.3",
+    "typescript": "^2.6.1",
     "webpack": "^2.6.0",
     "webpack-dev-server": "^1.12.1"
   }
