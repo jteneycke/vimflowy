@@ -1,8 +1,8 @@
 /* globals describe, it */
 import TestCase from '../testcase';
 
-describe('random set of basic tests', function() {
-  it('tests adding, deleting, undoing, and redoing', async function() {
+describe('random set of basic tests', function () {
+  it('tests adding, deleting, undoing, and redoing', async function () {
     let t = new TestCase(['']);
     t.sendKey('i');
     t.sendKeys('hello world');
@@ -49,7 +49,7 @@ describe('random set of basic tests', function() {
     await t.done();
   });
 
-  it("tests that redo doesn't go past latest", async function() {
+  it("tests that redo doesn't go past latest", async function () {
     let t = new TestCase(['thing']);
     t.sendKey('x');
     t.expect(['hing']);
@@ -64,7 +64,7 @@ describe('random set of basic tests', function() {
     await t.done();
   });
 
-  it("i + esc moves the cursor back a character, a + esc doesn't", async function() {
+  it("i + esc moves the cursor back a character, a + esc doesn't", async function () {
     let t = new TestCase(['hello']);
     t.sendKey('$');
     // i + esc moves the cursor back a character
@@ -85,7 +85,7 @@ describe('random set of basic tests', function() {
     await t.done();
   });
 
-  it('tests cursor behavior', async function() {
+  it('tests cursor behavior', async function () {
     let t = new TestCase(['hello world']);
 
     // make sure delete and then undo doesn't move the cursor
@@ -126,21 +126,21 @@ describe('random set of basic tests', function() {
     await t.done();
   });
 
-  it("tests the cursor doesn't go before line", async function() {
+  it("tests the cursor doesn't go before line", async function () {
     let t = new TestCase(['blahblah']);
     t.sendKeys('0d$iab');
     t.expect(['ab']);
     await t.done();
   });
 
-  it('replaces with space properly', async function() {
+  it('replaces with space properly', async function () {
     let t = new TestCase(['space']);
     t.sendKeys(['f', 'a', 'r', 'space']);
     t.expect(['sp ce']);
     await t.done();
   });
 
-  it('replaces with number properly', async function() {
+  it('replaces with number properly', async function () {
     let t = new TestCase(['number']);
     t.sendKeys(['f', 'e', 'r', '3']);
     t.expect(['numb3r']);
@@ -148,9 +148,9 @@ describe('random set of basic tests', function() {
   });
 });
 
-describe('numbers (repeat next action)', function() {
+describe('numbers (repeat next action)', function () {
 
-  it('works on movement', async function() {
+  it('works on movement', async function () {
     let t = new TestCase(['obladi oblada o lee lee o lah lah']);
     t.sendKeys('5lx');
     t.expect(['oblad oblada o lee lee o lah lah']);
@@ -183,7 +183,7 @@ describe('numbers (repeat next action)', function() {
     await t.done();
   });
 
-  it('works on replace', async function() {
+  it('works on replace', async function () {
     let t = new TestCase(['1234123412341234 is my credit card']);
     t.sendKeys('12r*');
     t.expect(['************1234 is my credit card']);
@@ -206,7 +206,7 @@ describe('numbers (repeat next action)', function() {
     await t.done();
   });
 
-  it('replace character yanks', async function() {
+  it('replace character yanks', async function () {
     let t = new TestCase(['yank']);
     t.sendKeys('st');
     t.sendKey('esc');
@@ -216,7 +216,7 @@ describe('numbers (repeat next action)', function() {
     await t.done();
   });
 
-  it('saves in insert mode upon motion', async function() {
+  it('saves in insert mode upon motion', async function () {
     let t = new TestCase(['']);
     t.sendKeys('A');
     t.sendKeys('asdf');
@@ -231,7 +231,7 @@ describe('numbers (repeat next action)', function() {
     await t.done();
   });
 
-  it('saves in insert mode before and after split line', async function() {
+  it('saves in insert mode before and after split line', async function () {
     let t = new TestCase(['']);
     t.sendKeys('A');
     t.sendKeys('asdf');
@@ -247,7 +247,7 @@ describe('numbers (repeat next action)', function() {
     await t.done();
   });
 
-  it('saves in insert mode before and after tab', async function() {
+  it('saves in insert mode before and after tab', async function () {
     let t = new TestCase(['a', 'b']);
     t.sendKeys('jA');
     t.sendKeys('asdf');
@@ -280,12 +280,12 @@ describe('numbers (repeat next action)', function() {
     await t.done();
   });
 
-  it('change to end of line', async function() {
+  it('change to end of line', async function () {
     let t = new TestCase(['humpty dumpty']);
     t.sendKeys('fyC');
     t.sendKeys('hump');
     t.sendKey('esc');
-    t.expect([ 'humpthump' ]);
+    t.expect(['humpthump']);
     await t.done();
   });
 });

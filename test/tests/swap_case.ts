@@ -1,8 +1,8 @@
 /* globals describe, it */
 import TestCase from '../testcase';
 
-describe('swapping case', function() {
-  it('should swap case at cursor and moving cursor to the right', async function() {
+describe('swapping case', function () {
+  it('should swap case at cursor and moving cursor to the right', async function () {
     const t = new TestCase(['oo']);
     t.sendKeys('0');
     t.sendKey('~');
@@ -17,7 +17,7 @@ describe('swapping case', function() {
     await t.done();
   });
 
-  it('should not move cursor if swapping at the end of line', async function() {
+  it('should not move cursor if swapping at the end of line', async function () {
     const t = new TestCase(['oo']);
     t.sendKeys('$~');
     t.expect(['oO']);
@@ -30,7 +30,7 @@ describe('swapping case', function() {
     await t.done();
   });
 
-  it('should swap case in visual mode', async function() {
+  it('should swap case in visual mode', async function () {
     const t = new TestCase(['swapCaseHere']);
     t.sendKeys('0llvlll~');
     t.expect(['swAPcAseHere']);
@@ -43,7 +43,7 @@ describe('swapping case', function() {
     await t.done();
   });
 
-  it('should undo case swapping', async function() {
+  it('should undo case swapping', async function () {
     const t = new TestCase(['swapCaseHere']);
     t.sendKeys('0~');
     t.expect(['SwapCaseHere']);
@@ -58,7 +58,7 @@ describe('swapping case', function() {
     await t.done();
   });
 
-  it('should swap case for multiple selected lines', async function() {
+  it('should swap case for multiple selected lines', async function () {
     const t = new TestCase(['swap', 'case', 'here']);
     t.sendKeys('0Vj~');
     t.expect(['SWAP', 'CASE', 'here']);
@@ -90,7 +90,7 @@ describe('swapping case', function() {
     await t.done();
   });
 
-  it('should undo multiline case swapping', async function() {
+  it('should undo multiline case swapping', async function () {
     const t = new TestCase(['swap', 'case']);
     t.sendKeys('0V~');
     t.expect(['SWAP', 'case']);

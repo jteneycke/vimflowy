@@ -1,8 +1,8 @@
 /* globals describe, it */
 import TestCase from '../testcase';
 
-describe('delete to end', function() {
-  it('works in basic case', async function() {
+describe('delete to end', function () {
+  it('works in basic case', async function () {
     let t = new TestCase(['some random text']);
     t.sendKeys('wD');
     t.expect(['some ']);
@@ -15,7 +15,7 @@ describe('delete to end', function() {
     await t.done();
   });
 
-  it('works at the end of a line', async function() {
+  it('works at the end of a line', async function () {
     let t = new TestCase(['some random text']);
     t.sendKeys('$D');
     t.expect(['some random tex']);
@@ -26,8 +26,8 @@ describe('delete to end', function() {
   });
 });
 
-describe('delete to home/end in insert mode', function() {
-  it('works in basic cases', async function() {
+describe('delete to home/end in insert mode', function () {
+  it('works in basic cases', async function () {
     let t = new TestCase(['some random text']);
     t.sendKeys('wi');
     t.sendKey('ctrl+k');
@@ -63,7 +63,7 @@ describe('delete to home/end in insert mode', function() {
     await t.done();
   });
 
-  it('in insert mode, ctrl+y brings you past end', async function() {
+  it('in insert mode, ctrl+y brings you past end', async function () {
     let t = new TestCase(['some random text']);
     t.sendKeys('wi');
     t.sendKey('ctrl+k');
@@ -75,7 +75,7 @@ describe('delete to home/end in insert mode', function() {
     await t.done();
   });
 
-  it("doesn't cause an undoable mutation when nothing happens", async function() {
+  it("doesn't cause an undoable mutation when nothing happens", async function () {
     let t = new TestCase(['some random text']);
     t.sendKeys('x');
     t.expect(['ome random text']);

@@ -2,9 +2,9 @@
 import TestCase from '../testcase';
 import { RegisterTypes } from '../../src/assets/ts/register';
 
-describe('yank', function() {
-  describe('characters', function() {
-    it('works in basic case', async function() {
+describe('yank', function () {
+  describe('characters', function () {
+    it('works in basic case', async function () {
       let t = new TestCase(['px']);
       t.sendKeys('xp');
       t.expect(['xp']);
@@ -14,7 +14,7 @@ describe('yank', function() {
       await t.done();
     });
 
-    it('works with deleting words', async function() {
+    it('works with deleting words', async function () {
       let t = new TestCase(['one fish, two fish, red fish, blue fish']);
       t.sendKeys('dWWhp');
       t.expect(['fish, one two fish, red fish, blue fish']);
@@ -43,7 +43,7 @@ describe('yank', function() {
       await t.done();
     });
 
-    it('works behind', async function() {
+    it('works behind', async function () {
       let t = new TestCase(['one fish, two fish, red fish, blue fish']);
       t.sendKeys('$F,d$3bP');
       t.expect(['one fish, two fish, blue fish, red fish']);
@@ -53,7 +53,7 @@ describe('yank', function() {
       await t.done();
     });
 
-    it('works behind in an edge case with empty line, and repeat', async function() {
+    it('works behind in an edge case with empty line, and repeat', async function () {
       let t = new TestCase(['word']);
       t.sendKeys('de');
       t.expect(['']);
@@ -69,7 +69,7 @@ describe('yank', function() {
       await t.done();
     });
 
-    it('works with motions', async function() {
+    it('works with motions', async function () {
       let t = new TestCase(['lol']);
       t.sendKeys('yllp');
       t.expect(['loll']);
@@ -104,15 +104,15 @@ describe('yank', function() {
     });
   });
 
-  describe('rows', function() {
-    it('works in a basic case', async function() {
+  describe('rows', function () {
+    it('works in a basic case', async function () {
       let t = new TestCase(['humpty', 'dumpty']);
       t.sendKeys('dd');
       t.expectRegisterType(RegisterTypes.CLONED_ROWS);
-      t.expect([ 'dumpty' ]);
+      t.expect(['dumpty']);
       t.sendKeys('p');
       t.expectRegisterType(RegisterTypes.CLONED_ROWS);
-      t.expect([ 'dumpty', 'humpty' ]);
+      t.expect(['dumpty', 'humpty']);
       t.sendKeys('u');
       t.expect(['dumpty']);
       t.sendKeys('u');
@@ -123,10 +123,10 @@ describe('yank', function() {
       await t.done();
     });
 
-    it('works behind', async function() {
+    it('works behind', async function () {
       let t = new TestCase(['humpty', 'dumpty']);
       t.sendKeys('jddP');
-      t.expect([ 'dumpty', 'humpty' ]);
+      t.expect(['dumpty', 'humpty']);
       t.sendKeys('u');
       t.expect(['humpty']);
       t.sendKeys('u');
@@ -134,66 +134,84 @@ describe('yank', function() {
       await t.done();
     });
 
-    it('pastes siblings, not children', async function() {
+    it('pastes siblings, not children', async function () {
       let t = new TestCase([
-        { text: 'herpy', children: [
-          { text: 'derpy', children: [
-            'burpy',
-          ] },
-        ] },
+        {
+          text: 'herpy', children: [
+            {
+              text: 'derpy', children: [
+                'burpy',
+              ]
+            },
+          ]
+        },
       ]);
       t.sendKeys('jjddp');
       t.expect([
-        { text: 'herpy', children: [
-          'derpy',
-          'burpy',
-        ] },
+        {
+          text: 'herpy', children: [
+            'derpy',
+            'burpy',
+          ]
+        },
       ]);
 
       t.sendKeys('u');
       t.expect([
-        { text: 'herpy', children: [
-          'derpy',
-        ] },
+        {
+          text: 'herpy', children: [
+            'derpy',
+          ]
+        },
       ]);
       t.sendKeys('kp');
       t.expect([
-        { text: 'herpy', children: [
-          'burpy',
-          'derpy',
-        ] },
+        {
+          text: 'herpy', children: [
+            'burpy',
+            'derpy',
+          ]
+        },
       ]);
 
       t.sendKeys('u');
       t.expect([
-        { text: 'herpy', children: [
-          'derpy',
-        ] },
+        {
+          text: 'herpy', children: [
+            'derpy',
+          ]
+        },
       ]);
       t.sendKeys('P');
       t.expect([
         'burpy',
-        { text: 'herpy', children: [
-          'derpy',
-        ] },
+        {
+          text: 'herpy', children: [
+            'derpy',
+          ]
+        },
       ]);
       t.sendKeys('u');
       t.expect([
-        { text: 'herpy', children: [
-          'derpy',
-        ] },
+        {
+          text: 'herpy', children: [
+            'derpy',
+          ]
+        },
       ]);
       t.sendKeys('jP');
       t.expect([
-        { text: 'herpy', children: [
-          'burpy',
-          'derpy',
-        ] },
+        {
+          text: 'herpy', children: [
+            'burpy',
+            'derpy',
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('pastes register of recent action after undo', async function() {
+    it('pastes register of recent action after undo', async function () {
       let t = new TestCase(['hey', 'yo', 'yo', 'yo', 'yo', 'yo']);
       t.sendKeys('yyjp');
       t.expect(['hey', 'yo', 'hey', 'yo', 'yo', 'yo', 'yo']);
@@ -231,290 +249,388 @@ describe('yank', function() {
       await t.done();
     });
 
-    it('works in basic case', async function() {
+    it('works in basic case', async function () {
       let t = new TestCase([
-        { text: 'hey', children: [
-          'yo',
-        ] },
+        {
+          text: 'hey', children: [
+            'yo',
+          ]
+        },
       ]);
       t.sendKeys('yyp');
       t.expect([
-        { text: 'hey', children: [
-          'hey',
-          'yo',
-        ] },
+        {
+          text: 'hey', children: [
+            'hey',
+            'yo',
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('works recursively', async function() {
+    it('works recursively', async function () {
       let t = new TestCase([
-        { text: 'hey', children: [
-          'yo',
-        ] },
+        {
+          text: 'hey', children: [
+            'yo',
+          ]
+        },
       ]);
       t.sendKeys('yrp');
       t.expect([
-        { text: 'hey', children: [
-          { text: 'hey', children: [
+        {
+          text: 'hey', children: [
+            {
+              text: 'hey', children: [
+                'yo',
+              ]
+            },
             'yo',
-          ] },
-          'yo',
-        ] },
+          ]
+        },
       ]);
       t.sendKeys('p');
       t.expect([
-        { text: 'hey', children: [
-          { text: 'hey', children: [
-            { text: 'hey', children: [
-              'yo',
-            ] },
+        {
+          text: 'hey', children: [
+            {
+              text: 'hey', children: [
+                {
+                  text: 'hey', children: [
+                    'yo',
+                  ]
+                },
+                'yo',
+              ]
+            },
             'yo',
-          ] },
-          'yo',
-        ] },
+          ]
+        },
       ]);
       t.sendKeys('u');
       t.expect([
-        { text: 'hey', children: [
-          { text: 'hey', children: [
+        {
+          text: 'hey', children: [
+            {
+              text: 'hey', children: [
+                'yo',
+              ]
+            },
             'yo',
-          ] },
-          'yo',
-        ] },
+          ]
+        },
       ]);
       t.sendKey('ctrl+r');
       t.expect([
-        { text: 'hey', children: [
-          { text: 'hey', children: [
-            { text: 'hey', children: [
-              'yo',
-            ] },
+        {
+          text: 'hey', children: [
+            {
+              text: 'hey', children: [
+                {
+                  text: 'hey', children: [
+                    'yo',
+                  ]
+                },
+                'yo',
+              ]
+            },
             'yo',
-          ] },
-          'yo',
-        ] },
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it("preserves collapsedness, and doesn't paste as child of collapsed", async function() {
+    it("preserves collapsedness, and doesn't paste as child of collapsed", async function () {
       let t = new TestCase([
-        { text: 'hey', collapsed: true, children: [
-          'yo',
-        ] },
+        {
+          text: 'hey', collapsed: true, children: [
+            'yo',
+          ]
+        },
       ]);
       t.sendKeys('yrp');
       t.expect([
-        { text: 'hey', collapsed: true, children: [
-          'yo',
-        ] },
-        { text: 'hey', collapsed: true, children: [
-          'yo',
-        ] },
+        {
+          text: 'hey', collapsed: true, children: [
+            'yo',
+          ]
+        },
+        {
+          text: 'hey', collapsed: true, children: [
+            'yo',
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('preserves collapsedness', async function() {
+    it('preserves collapsedness', async function () {
       let t = new TestCase([
-        { text: 'hey', collapsed: true, children: [
-          'yo',
-        ] },
+        {
+          text: 'hey', collapsed: true, children: [
+            'yo',
+          ]
+        },
       ]);
       t.sendKeys('yrzp');
       t.expect([
-        { text: 'hey', children: [
-          { text: 'hey', collapsed: true, children: [
+        {
+          text: 'hey', children: [
+            {
+              text: 'hey', collapsed: true, children: [
+                'yo',
+              ]
+            },
             'yo',
-          ] },
-          'yo',
-        ] },
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('pastes clones', async function() {
+    it('pastes clones', async function () {
       let t = new TestCase([
-        { text: 'hey', collapsed: true, children: [
-          'yo',
-        ] },
+        {
+          text: 'hey', collapsed: true, children: [
+            'yo',
+          ]
+        },
         'yo',
-        { text: 'what', children: [
-          'up',
-        ] },
+        {
+          text: 'what', children: [
+            'up',
+          ]
+        },
       ]);
       t.sendKeys('Vjd');
       t.expect([
-        { text: 'what', children: [
-          'up',
-        ] },
+        {
+          text: 'what', children: [
+            'up',
+          ]
+        },
       ]);
       t.expectRegisterType(RegisterTypes.CLONED_ROWS);
       t.sendKeys('P');
       t.expect([
-        { text: 'hey', collapsed: true, children: [
-          'yo',
-        ] },
+        {
+          text: 'hey', collapsed: true, children: [
+            'yo',
+          ]
+        },
         'yo',
-        { text: 'what', children: [
-          'up',
-        ] },
+        {
+          text: 'what', children: [
+            'up',
+          ]
+        },
       ]);
       t.sendKeys('zryjrh');
       t.expect([
-        { text: 'yey', children: [
-          'ho',
-        ] },
+        {
+          text: 'yey', children: [
+            'ho',
+          ]
+        },
         'yo',
-        { text: 'what', children: [
-          'up',
-        ] },
+        {
+          text: 'what', children: [
+            'up',
+          ]
+        },
       ]);
       // second paste should be changed thing
       t.sendKeys('GP');
       t.expect([
-        { text: 'yey', id: 1, children: [
-          'ho',
-        ] },
+        {
+          text: 'yey', id: 1, children: [
+            'ho',
+          ]
+        },
         { text: 'yo', id: 3 },
-        { text: 'what', children: [
-          { clone: 1 },
-          { clone: 3 },
-          'up',
-        ] },
+        {
+          text: 'what', children: [
+            { clone: 1 },
+            { clone: 3 },
+            'up',
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('pastes clones at collapsed view root', async function() {
+    it('pastes clones at collapsed view root', async function () {
       let t = new TestCase([
         'blah',
-        { text: 'herpy', children: [
-          { text: 'derpy', collapsed: true, children: [
-            'burpy',
-          ] },
-        ] },
+        {
+          text: 'herpy', children: [
+            {
+              text: 'derpy', collapsed: true, children: [
+                'burpy',
+              ]
+            },
+          ]
+        },
       ]);
       t.sendKeys('ycjj');
       t.sendKey('enter');
       t.sendKeys('p');
       t.expect([
         { id: 1, text: 'blah' },
-        { text: 'herpy', children: [
-          { text: 'derpy', collapsed: true, children: [
-            { clone: 1 },
-            'burpy',
-          ] },
-        ] },
+        {
+          text: 'herpy', children: [
+            {
+              text: 'derpy', collapsed: true, children: [
+                { clone: 1 },
+                'burpy',
+              ]
+            },
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('yanks serialized (not cloned)', async function() {
+    it('yanks serialized (not cloned)', async function () {
       let t = new TestCase([
-        { text: 'hey', collapsed: true, children: [
-          'yo',
-        ] },
+        {
+          text: 'hey', collapsed: true, children: [
+            'yo',
+          ]
+        },
         'yo',
-        { text: 'what', children: [
-          'up',
-        ] },
+        {
+          text: 'what', children: [
+            'up',
+          ]
+        },
       ]);
       t.sendKeys('Vjy');
       t.expectRegisterType(RegisterTypes.SERIALIZED_ROWS);
       t.sendKeys('gg');
       t.sendKeys('zryjrh');
       t.expect([
-        { text: 'yey', children: [
-          'ho',
-        ] },
+        {
+          text: 'yey', children: [
+            'ho',
+          ]
+        },
         'yo',
-        { text: 'what', children: [
-          'up',
-        ] },
+        {
+          text: 'what', children: [
+            'up',
+          ]
+        },
       ]);
       // second paste should be changed thing
       t.sendKeys('GP');
       t.expect([
-        { text: 'yey', children: [
-          'ho',
-        ] },
+        {
+          text: 'yey', children: [
+            'ho',
+          ]
+        },
         'yo',
-        { text: 'what', children: [
-          { text: 'hey', collapsed: true, children: [
+        {
+          text: 'what', children: [
+            {
+              text: 'hey', collapsed: true, children: [
+                'yo',
+              ]
+            },
             'yo',
-          ] },
-          'yo',
-          'up',
-        ] },
+            'up',
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('works to end of line', async function() {
+    it('works to end of line', async function () {
       let t = new TestCase(['humpty dumpty']);
       t.sendKeys('fpY0P');
-      t.expect([ 'pty dumptyhumpty dumpty' ]);
+      t.expect(['pty dumptyhumpty dumpty']);
       await t.done();
     });
 
-    it('works at collapsed view root', async function() {
+    it('works at collapsed view root', async function () {
       let t = new TestCase([
-        { text: 'herpy', children: [
-          { text: 'derpy', collapsed: true, children: [
-            'burpy',
-          ] },
-        ] },
+        {
+          text: 'herpy', children: [
+            {
+              text: 'derpy', collapsed: true, children: [
+                'burpy',
+              ]
+            },
+          ]
+        },
       ]);
       t.sendKey('j');
       t.sendKey('enter');
       t.sendKeys('yyp');
       t.expect([
-        { text: 'herpy', children: [
-          { text: 'derpy', collapsed: true, children: [
-            'derpy',
-            'burpy',
-          ] },
-        ] },
+        {
+          text: 'herpy', children: [
+            {
+              text: 'derpy', collapsed: true, children: [
+                'derpy',
+                'burpy',
+              ]
+            },
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('works at view root with no children', async function() {
+    it('works at view root with no children', async function () {
       let t = new TestCase([
-        { text: 'herpy', children: [
-          'derpy'
-        ] },
+        {
+          text: 'herpy', children: [
+            'derpy'
+          ]
+        },
       ]);
       t.sendKey('j');
       t.sendKey('enter');
       t.sendKeys('yyp');
       t.expect([
-        { text: 'herpy', children: [
-          { text: 'derpy', children: [
-            'derpy',
-          ] },
-        ] },
+        {
+          text: 'herpy', children: [
+            {
+              text: 'derpy', children: [
+                'derpy',
+              ]
+            },
+          ]
+        },
       ]);
       await t.done();
     });
 
-    it('works at collapsed view root with no children', async function() {
+    it('works at collapsed view root with no children', async function () {
       let t = new TestCase([
-        { text: 'herpy', children: [
-          { text: 'derpy', collapsed: true },
-        ] },
+        {
+          text: 'herpy', children: [
+            { text: 'derpy', collapsed: true },
+          ]
+        },
       ]);
       t.sendKey('j');
       t.sendKey('enter');
       t.sendKeys('yyp');
       t.expect([
-        { text: 'herpy', children: [
-          { text: 'derpy', collapsed: true, children: [
-            'derpy',
-          ] },
-        ] },
+        {
+          text: 'herpy', children: [
+            {
+              text: 'derpy', collapsed: true, children: [
+                'derpy',
+              ]
+            },
+          ]
+        },
       ]);
       await t.done();
     });

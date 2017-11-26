@@ -80,7 +80,7 @@ class TestCase {
     });
   }
 
-  protected _chain(next: () => void, waitKeyHandler = true) {
+  protected _chain(next: () => void, waitKeyHandler = true): this {
     this.prom = this.prom.then(async () => {
       if (waitKeyHandler) {
         await this.keyhandler.queue(async () => {
@@ -93,20 +93,15 @@ class TestCase {
     return this;
   }
 
-  public done() {
-    this.keyhandler.queue(async() => {
-      this.prom = this.prom.then(async () => {
-        if (this.plugins) {
-          for (let i = 0; i < this.plugins.length; i++) {
-            const pluginName = this.plugins[i];
-            if (this.pluginManager.getStatus(pluginName) === PluginStatus.ENABLED) {
+  public async done(): Promise<void> {
+    await this.keyhandler.queue(async () => {
+      this.prom.then(async () => {
+        if (this.plugins)
+          for (const pluginName of this.plugins)
+            if (this.pluginManager.getStatus(pluginName) === PluginStatus.ENABLED)
               await this.pluginManager.disable(pluginName);
-            }
-          }
-        }
       });
     });
-    return this.prom;
   }
 
   protected _expectDeepEqual<T>(actual: T, expected: T, message: string) {
@@ -123,10 +118,11 @@ class TestCase {
     }
   }
 
-  protected _expectEqual<T>(actual: T, expected: T, message: string) {
+  protected _expectEqual<T>(actual: T, expected: T, message: string): void {
     if (actual !== expected) {
       logger.flush();
       console.error(`
+        \n${message}
         \nExpected:
         \n${expected}
         \nBut got:
@@ -137,23 +133,24 @@ class TestCase {
     }
   }
 
-  public sendKeys(keysInput: string | Array<Key>) {
-    let keys: Array<Key>;
-    if (typeof keysInput === 'string') {
-      keys = keysInput.split('');
-    } else {
-      keys = keysInput;
-    }
-
+  public sendKeys(keysInput: string | Array<Key>): this {
+    const KEYS = this.parseKeysInput(keysInput);
     this._chain(() => {
-      keys.forEach((key) => {
+      KEYS.forEach((key) => {
         this.keyhandler.queueKey(key);
       });
     }, false);
     return this;
   }
 
-  public sendKey(key: Key) {
+  private parseKeysInput(keysInput: string | Array<Key>): Array<Key> {
+    const keys: Array<Key> = [];
+    for (const key of keysInput)
+      keys.push(key);
+    return keys;
+  }
+
+  public sendKey(key: Key): this {
     return this.sendKeys([key]);
   }
 
@@ -175,47 +172,47 @@ class TestCase {
     });
   }
 
-  public expect(expected: Array<SerializedBlock>) {
+  public expect(expected: Array<SerializedBlock>): this {
     return this._chain(async () => {
-      const serialized: any = await this.document.serialize(this.document.root.row, {pretty: true});
+      const serialized: any = await this.document.serialize(this.document.root.row, { pretty: true });
       this._expectDeepEqual(serialized.children, expected, 'Unexpected serialized content');
     });
   }
 
-  public expectViewRoot(expected: Row) {
+  public expectViewRoot(expected: Row): this {
     return this._chain(() => {
       this._expectEqual(this.session.viewRoot.row, expected,
-                        'Unexpected view root');
+        'Unexpected view root');
     });
   }
 
-  public expectCursor(row: Row, col: Col) {
+  public expectCursor(row: Row, col: Col): this {
     return this._chain(() => {
       this._expectEqual(this.session.cursor.row, row,
-                        'Unexpected cursor row');
+        'Unexpected cursor row');
       this._expectEqual(this.session.cursor.col, col,
-                        'Unexpected cursor col');
+        'Unexpected cursor col');
     });
   }
 
-  public expectJumpIndex(index: number, historyLength: number | null = null) {
+  public expectJumpIndex(index: number, historyLength: number | null = null): this {
     return this._chain(() => {
       this._expectEqual(this.session.jumpIndex, index,
-                        'Unexpected jump index');
+        'Unexpected jump index');
       if (historyLength !== null) {
         this._expectEqual(this.session.jumpHistory.length, historyLength,
-                          'Unexpected jump history length');
+          'Unexpected jump history length');
       }
     });
   }
 
-  public expectNumMenuResults(num_results: number) {
+  public expectNumMenuResults(num_results: number): this {
     return this._chain(() => {
       if (this.session.menu === null) {
         throw new Error('Menu was null while expecting menu results');
       }
       this._expectEqual(this.session.menu.results.length, num_results,
-                        'Unexpected number of results');
+        'Unexpected number of results');
     });
   }
 
@@ -224,21 +221,21 @@ class TestCase {
     return this;
   }
 
-  public expectRegister(expected: SerializedRegister) {
+  public expectRegister(expected: SerializedRegister): this {
     return this._chain(() => {
       let current = this.register.serialize();
       this._expectDeepEqual(current, expected, 'Unexpected register content');
     });
   }
 
-  public expectRegisterType(expected: RegisterTypes) {
+  public expectRegisterType(expected: RegisterTypes): this {
     return this._chain(() => {
       let current = this.register.serialize();
       this._expectDeepEqual(current.type, expected, 'Unexpected register type');
     });
   }
 
-  public expectExport(mimeType: string, expected: string) {
+  public expectExport(mimeType: string, expected: string): this {
     return this._chain(async () => {
       let content = await this.session.exportContent(mimeType);
       this._expectEqual(content, expected, 'Unexpected export content');

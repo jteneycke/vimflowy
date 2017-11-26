@@ -4,12 +4,14 @@ import TestCase from '../testcase';
 let jumpPreviousKey = 'ctrl+o';
 let jumpNextKey = 'ctrl+i';
 
-describe('jumps', function() {
-  it('basically works', async function() {
+describe('jumps', function () {
+  it('basically works', async function () {
     let t = new TestCase([
-      { text: 'first', children: [
-        'second',
-      ] },
+      {
+        text: 'first', children: [
+          'second',
+        ]
+      },
       'third',
     ]);
     t.expectViewRoot(0);
@@ -46,30 +48,38 @@ describe('jumps', function() {
     t.sendKeys('p');
     t.expect([
       'third',
-      { text: 'first', children: [
-        'second',
-      ] },
+      {
+        text: 'first', children: [
+          'second',
+        ]
+      },
     ]);
     t.sendKey(jumpNextKey); // succeeds
     t.expectViewRoot(1);
     t.sendKeys('jx');
     t.expect([
       'third',
-      { text: 'first', children: [
-        'econd',
-      ] },
+      {
+        text: 'first', children: [
+          'econd',
+        ]
+      },
     ]);
     await t.done();
   });
 
-  it('erases history properly', async function() {
+  it('erases history properly', async function () {
     let t = new TestCase([
-      { text: 'first', children: [
-        'second',
-      ] },
-      { text: 'third', children: [
-        'fourth',
-      ] },
+      {
+        text: 'first', children: [
+          'second',
+        ]
+      },
+      {
+        text: 'third', children: [
+          'fourth',
+        ]
+      },
     ]);
     t.expectViewRoot(0);
     t.expectJumpIndex(0, 1);
@@ -95,9 +105,11 @@ describe('jumps', function() {
 
     t.sendKeys('dd');
     t.expect([
-      { text: 'third', children: [
-        'fourth',
-      ] },
+      {
+        text: 'third', children: [
+          'fourth',
+        ]
+      },
     ]);
 
     t.sendKey(jumpPreviousKey);
@@ -117,12 +129,14 @@ describe('jumps', function() {
     await t.done();
   });
 
-  it('tries to return cursor position', async function() {
+  it('tries to return cursor position', async function () {
     let t = new TestCase([
-      { text: 'first', children: [
-        'second',
-        'cursor',
-      ] },
+      {
+        text: 'first', children: [
+          'second',
+          'cursor',
+        ]
+      },
       'third',
     ]);
     t.expectViewRoot(0);
@@ -147,10 +161,12 @@ describe('jumps', function() {
     // still goes to cursor despite reordering
     t.sendKeys('jddP');
     t.expect([
-      { text: 'first', children: [
-        'cursor',
-        'second',
-      ] },
+      {
+        text: 'first', children: [
+          'cursor',
+          'second',
+        ]
+      },
       'third',
     ]);
     t.expectViewRoot(1);
@@ -169,9 +185,11 @@ describe('jumps', function() {
     // doesn't go to cursor anymore
     t.sendKeys('dd');
     t.expect([
-      { text: 'first', children: [
-        'second',
-      ] },
+      {
+        text: 'first', children: [
+          'second',
+        ]
+      },
       'third',
     ]);
     t.expectViewRoot(1);
@@ -180,9 +198,11 @@ describe('jumps', function() {
     t.sendKey(jumpPreviousKey);
     t.sendKeys('G');
     t.expect([
-      { text: 'first', children: [
-        'second',
-      ] },
+      {
+        text: 'first', children: [
+          'second',
+        ]
+      },
       'third',
     ]);
     t.expectViewRoot(0);
@@ -223,9 +243,11 @@ describe('jumps', function() {
     t.sendKey('tab');
     t.sendKey('esc');
     t.expect([
-      { text: 'first', children: [
-        'ok',
-      ] },
+      {
+        text: 'first', children: [
+          'ok',
+        ]
+      },
       'third',
     ]);
 
@@ -250,12 +272,14 @@ describe('jumps', function() {
     await t.done();
   });
 
-  it('considers clones the same', async function() {
+  it('considers clones the same', async function () {
     let t = new TestCase([
-      { text: 'first', children: [
-        'second',
-        'cursor',
-      ] },
+      {
+        text: 'first', children: [
+          'second',
+          'cursor',
+        ]
+      },
       'third',
     ]);
     t.expectViewRoot(0);
@@ -277,7 +301,7 @@ describe('jumps', function() {
     t.expectJumpIndex(0);
     t.sendKeys('dd');
     t.expectCursor(4, 0);
-    t.expect([ 'third' ]);
+    t.expect(['third']);
 
     // unable to jump because of delete
     t.sendKey(jumpNextKey);
@@ -287,10 +311,12 @@ describe('jumps', function() {
     t.sendKeys('p');
     t.expect([
       'third',
-      { text: 'first', children: [
-        'second',
-        'cursor',
-      ] },
+      {
+        text: 'first', children: [
+          'second',
+          'cursor',
+        ]
+      },
     ]);
     // now able to jump to clone
     t.sendKey(jumpNextKey);
@@ -303,14 +329,18 @@ describe('jumps', function() {
     await t.done();
   });
 
-  it('skips deleted rows', async function() {
+  it('skips deleted rows', async function () {
     let t = new TestCase([
       'cursor',
-      { text: 'first', children: [
-        { text: 'second', children: [
-          'third',
-        ] },
-      ] },
+      {
+        text: 'first', children: [
+          {
+            text: 'second', children: [
+              'third',
+            ]
+          },
+        ]
+      },
     ]);
     t.expectViewRoot(0);
     t.expectCursor(1, 0);

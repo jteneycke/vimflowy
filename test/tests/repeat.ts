@@ -1,9 +1,9 @@
 /* globals describe, it */
 import TestCase from '../testcase';
 
-describe('repeat', function() {
+describe('repeat', function () {
 
-  it('works with insertion of text', async function() {
+  it('works with insertion of text', async function () {
     const t = new TestCase(['']);
     t.sendKeys('....');
     t.expect(['']);
@@ -16,7 +16,7 @@ describe('repeat', function() {
     await t.done();
   });
 
-  it('works with deletion + motion', async function() {
+  it('works with deletion + motion', async function () {
     const t = new TestCase(['the quick brown fox   jumped   over the lazy dog']);
     t.sendKeys('dw');
     t.expect(['quick brown fox   jumped   over the lazy dog']);
@@ -40,7 +40,7 @@ describe('repeat', function() {
     await t.done();
   });
 
-  it('works with change (c)', async function() {
+  it('works with change (c)', async function () {
     const t = new TestCase(['vim is great']);
     t.sendKeys('ceblah');
     t.sendKey('esc');
@@ -49,7 +49,7 @@ describe('repeat', function() {
     await t.done();
   });
 
-  it('works with replace', async function() {
+  it('works with replace', async function () {
     const t = new TestCase(['obladi oblada']);
     t.sendKeys('eroehl.');
     t.expect(['oblado oblado']);
@@ -58,8 +58,8 @@ describe('repeat', function() {
 });
 
 
-describe('tricky cases for repeat', function() {
-  it('test repeating x on empty row', async function() {
+describe('tricky cases for repeat', function () {
+  it('test repeating x on empty row', async function () {
     const t = new TestCase(['empty', '']);
     t.sendKeys('ru');
     t.expect(['umpty', '']);
@@ -68,7 +68,7 @@ describe('tricky cases for repeat', function() {
     await t.done();
   });
 
-  it('repeat of change', async function() {
+  it('repeat of change', async function () {
     const t = new TestCase([
       'oh say can you see',
       'and the home of the brave',
@@ -87,7 +87,7 @@ describe('tricky cases for repeat', function() {
     await t.done();
   });
 
-  it('repeat of paste, edge case with empty line', async function() {
+  it('repeat of paste, edge case with empty line', async function () {
     const t = new TestCase(['word']);
     t.sendKeys('de');
     t.expect(['']);
@@ -103,21 +103,21 @@ describe('tricky cases for repeat', function() {
     await t.done();
   });
 
-  it('works with visual mode', async function() {
-    const t = new TestCase([ '1234567' ]);
+  it('works with visual mode', async function () {
+    const t = new TestCase(['1234567']);
     t.sendKeys('vllx');
-    t.expect([ '4567' ]);
+    t.expect(['4567']);
     t.sendKeys('.');
-    t.expect([ '7' ]);
+    t.expect(['7']);
     await t.done();
   });
 
-  it('doesnt repeat visual mode yank', async function() {
-    const t = new TestCase([ '1234' ]);
+  it('doesnt repeat visual mode yank', async function () {
+    const t = new TestCase(['1234']);
     t.sendKeys('xvly');
-    t.expect([ '234' ]);
+    t.expect(['234']);
     t.sendKeys('.');
-    t.expect([ '24' ]);
+    t.expect(['24']);
     await t.done();
   });
 });

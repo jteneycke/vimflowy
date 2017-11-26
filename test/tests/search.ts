@@ -4,20 +4,24 @@ import TestCase from '../testcase';
 const globalSearchKey = '/';
 const localSearchKey = 'ctrl+/';
 
-describe('global search', function() {
-  it('works in basic cases', async function() {
+describe('global search', function () {
+  it('works in basic cases', async function () {
     let t = new TestCase([
       'blah',
       'searchblah',
       'blahsearchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKey(globalSearchKey);
     t.sendKeys('search');
@@ -29,12 +33,16 @@ describe('global search', function() {
       'blahsearchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKey(globalSearchKey);
     t.sendKeys('search');
@@ -42,19 +50,23 @@ describe('global search', function() {
     await t.done();
   });
 
-  it('can page down through menu results', async function() {
+  it('can page down through menu results', async function () {
     let t = new TestCase([
       'blah',
       'searchblah',
       'blahsearchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKey(globalSearchKey);
     t.sendKeys('search');
@@ -67,12 +79,16 @@ describe('global search', function() {
       'searchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKey(globalSearchKey);
     t.sendKeys('search');
@@ -85,12 +101,16 @@ describe('global search', function() {
       'blahsearchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKey(globalSearchKey);
     t.sendKeys('search');
@@ -104,12 +124,16 @@ describe('global search', function() {
       'searchblah',
       'blahsearchblah',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKey(globalSearchKey);
     t.sendKeys('search');
@@ -117,7 +141,7 @@ describe('global search', function() {
     await t.done();
   });
 
-  it('delete works', async function() {
+  it('delete works', async function () {
     let t = new TestCase([
       'blah',
       'blur',
@@ -152,19 +176,23 @@ describe('global search', function() {
     await t.done();
   });
 
-  it('can page up through menu results', async function() {
+  it('can page up through menu results', async function () {
     let t = new TestCase([
       'blah',
       'searchblah',
       'blahsearchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKey(globalSearchKey);
     t.sendKeys('search');
@@ -178,9 +206,11 @@ describe('global search', function() {
       'blahsearchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
       'blah',
     ]);
     t.sendKey(globalSearchKey);
@@ -189,19 +219,23 @@ describe('global search', function() {
     await t.done();
   });
 
-  it('can be canceled', async function() {
+  it('can be canceled', async function () {
     let t = new TestCase([
       'blah',
       'searchblah',
       'blahsearchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKey(globalSearchKey);
     t.sendKeys('search');
@@ -212,17 +246,21 @@ describe('global search', function() {
       'blahsearchblah',
       'search',
       'surch',
-      { text: 'blahsearch', children: [
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     await t.done();
   });
 
-  it('is case insensitive', async function() {
+  it('is case insensitive', async function () {
     let t = new TestCase([
       'case',
       'crease',
@@ -240,7 +278,7 @@ describe('global search', function() {
     await t.done();
   });
 
-  it('searches independently for words', async function() {
+  it('searches independently for words', async function () {
     let t = new TestCase([
       'broomball',
       'basketball',
@@ -257,13 +295,17 @@ describe('global search', function() {
     await t.done();
   });
 
-  it('moves the cursor to the searched for row', async function() {
+  it('moves the cursor to the searched for row', async function () {
     let t = new TestCase([
-      { text: 'first', children: [
-        { text: 'second', children: [
-          'third',
-        ] },
-      ] },
+      {
+        text: 'first', children: [
+          {
+            text: 'second', children: [
+              'third',
+            ]
+          },
+        ]
+      },
     ]);
     t.sendKeys('jj]]]');
     t.expectViewRoot(3);
@@ -275,20 +317,24 @@ describe('global search', function() {
   });
 });
 
-describe('local search', function() {
-  it('works in basic cases', async function() {
+describe('local search', function () {
+  it('works in basic cases', async function () {
     let t = new TestCase([
       'blah',
       'searchblah',
-      { text: 'blahsearch', children: [
-        'blahsearchblah',
-        'search',
-        'surch',
-        'blah',
-      ] },
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blahsearch', children: [
+          'blahsearchblah',
+          'search',
+          'surch',
+          'blah',
+        ]
+      },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     t.sendKeys('jj');
     t.sendKey('enter');
@@ -300,9 +346,11 @@ describe('local search', function() {
     t.expect([
       'blah',
       'searchblah',
-      { text: 'blah', children: [
-        'search',
-      ] },
+      {
+        text: 'blah', children: [
+          'search',
+        ]
+      },
     ]);
     await t.done();
   });

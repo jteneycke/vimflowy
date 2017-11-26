@@ -1,26 +1,26 @@
 /* globals describe, it */
 import TestCase from '../testcase';
 
-describe('macros', function() {
-  it('basically work', async function() {
-    let t = new TestCase([ 'banananana' ]);
+describe('macros', function () {
+  it('basically work', async function () {
+    let t = new TestCase(['banananana']);
     // does nothing since nothing has been recorded
     t.sendKeys('@q');
-    t.expect([ 'banananana' ]);
+    t.expect(['banananana']);
     t.sendKeys('qqxlq');
-    t.expect([ 'anananana' ]);
+    t.expect(['anananana']);
     t.sendKeys('4@q');
-    t.expect([ 'aaaaa' ]);
+    t.expect(['aaaaa']);
     t.sendKeys('u');
-    t.expect([ 'anananana' ]);
+    t.expect(['anananana']);
     t.sendKey('ctrl+r');
-    t.expect([ 'aaaaa' ]);
+    t.expect(['aaaaa']);
     t.sendKeys('u');
-    t.expect([ 'anananana' ]);
+    t.expect(['anananana']);
     t.sendKeys('l@q');
-    t.expect([ 'annanana' ]);
+    t.expect(['annanana']);
     t.sendKeys('3.');
-    t.expect([ 'annnn' ]);
+    t.expect(['annnn']);
     await t.done();
 
     t = new TestCase([
@@ -118,7 +118,7 @@ describe('macros', function() {
     await t.done();
   });
 
-  it('work nested', async function() {
+  it('work nested', async function () {
     // create a checkerboard!
     let t = new TestCase([
       '00000000',
@@ -168,7 +168,7 @@ describe('macros', function() {
     await t.done();
   });
 
-  it('works even if sequence contains q', async function() {
+  it('works even if sequence contains q', async function () {
     let t = new TestCase([
       'a q b q c q d q',
     ]);

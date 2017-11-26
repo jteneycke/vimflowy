@@ -5,12 +5,12 @@ import '../../src/assets/ts/plugins';
 
 const toggleStrikethroughKey = 'ctrl+enter';
 
-describe('todo', function() {
-  it('works in basic case', async function() {
+describe('todo', function () {
+  it('works in basic case', async function () {
     let t = new TestCase([
       'a line',
       'another line',
-    ], {plugins: [Todo.pluginName]});
+    ], { plugins: [Todo.pluginName] });
     t.sendKey(toggleStrikethroughKey);
     t.expect([
       '~~a line~~',
@@ -37,11 +37,11 @@ describe('todo', function() {
     await t.done();
   });
 
-  it('works in visual line', async function() {
+  it('works in visual line', async function () {
     let t = new TestCase([
       'a line',
       '~~another line~~',
-    ], {plugins: [Todo.pluginName]});
+    ], { plugins: [Todo.pluginName] });
     t.sendKeys('Vj');
     t.sendKey(toggleStrikethroughKey);
     t.expect([

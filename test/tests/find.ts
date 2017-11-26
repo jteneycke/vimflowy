@@ -1,8 +1,8 @@
 /* globals describe, it */
 import TestCase from '../testcase';
 
-describe('find', function() {
-  it('works in basic cases', async function() {
+describe('find', function () {
+  it('works in basic cases', async function () {
     const t = new TestCase(['Peter Piper picked a peck of pickled peppers']);
     t.sendKeys('fprd');
     t.expect(['Peter Pider picked a peck of pickled peppers']);
@@ -19,7 +19,7 @@ describe('find', function() {
     await t.done();
   });
 
-  it('works backwards in basic cases', async function() {
+  it('works backwards in basic cases', async function () {
     const t = new TestCase(['Peter Piper picked a peck of pickled peppers']);
     t.sendKeys('$Fpx');
     t.expect(['Peter Piper picked a peck of pickled pepers']);
@@ -34,7 +34,7 @@ describe('find', function() {
     await t.done();
   });
 
-  it('works in edge cases', async function() {
+  it('works in edge cases', async function () {
     let t = new TestCase(['edge case']);
     t.sendKeys('fsx');
     t.expect(['edge cae']);
@@ -52,7 +52,7 @@ describe('find', function() {
     await t.done();
   });
 
-  it('works in edge cases backwards', async function() {
+  it('works in edge cases backwards', async function () {
     let t = new TestCase(['edge case']);
     t.sendKeys('$Fdx');
     t.expect(['ege case']);
@@ -72,7 +72,7 @@ describe('find', function() {
     await t.done();
   });
 
-  it('works with delete', async function() {
+  it('works with delete', async function () {
     let t = new TestCase(['awdf awdf awdf']);
     t.sendKeys('d2fa');
     t.expect(['wdf']);
